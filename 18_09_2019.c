@@ -263,7 +263,7 @@ try_1:
         ret = semop(sem_main, &op, 1);
         if(ret == -1 && errno == EINTR) goto try_1;
 
-read_again:q
+read_again:
         sleep(1);
         puts("\n-->dammi una stringa:");
         ret = scanf("%ms", &buffer);
