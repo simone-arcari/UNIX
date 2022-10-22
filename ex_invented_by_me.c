@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <string.h>
 
+
 FILE *file;
 int nthread;
 char **buffers; //lista degli argumenti a partire da argv[2]
@@ -25,7 +26,7 @@ typedef struct __thread_args {
 	char *my_string;
 } thread_args;
 
-void* thread_function(void *arg){
+void* thread_function(void *arg) {
 	int ret;
 	int me = (int) arg;
 	int i,j;
@@ -51,18 +52,16 @@ void* thread_function(void *arg){
 		}else{
 			pthread_mutex_unlock(done);
 		}
+	}                        
 }
 
-                                
-}
 
-
-void error(char *str){
+void error(char *str) {
 	perror(str);
 	exit(EXIT_FAILURE);
 }
-int main(int argc, char **argv){
-	//char *buffer;
+
+int main(int argc, char **argv) {
 	int i,ret;
 	pthread_t tid;
 	if (argc<2){
@@ -77,7 +76,7 @@ int main(int argc, char **argv){
 	//alloco i mutex
 	ready = malloc(sizeof(pthread_mutex_t)*nthread);
 	done = malloc(sizeof(pthread_mutex_t));
-	//init mutex
+	/*init mutex */
 	for(i=0;i<nthread;i++){
 		if(pthread_mutex_init(ready+i,NULL) || pthread_mutex_lock(ready+i)){
 			error("ready init or lock error");
@@ -86,13 +85,14 @@ int main(int argc, char **argv){
 	if(pthread_mutex_init(done,NULL)){
 		error("done init error");
 	}
-	//creo i thread
+	
+	/* creo i thread */
 	for(i=0;i<nthread;i++){
 		if(pthread_create(&tid, NULL, thread_function, (void*)i) != 0){
 			error("thread creating error");
 		}
-
 	} 
+	
 	while(1){
 		
 		pthread_mutex_lock(done);
@@ -111,6 +111,4 @@ read_again:
 
 	}
 	return 0;
-
 }
-
