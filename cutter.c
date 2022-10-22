@@ -1,3 +1,9 @@
+/*
+
+this program cuts all the emails it finds in the file provided as input and writes them to the cutted.txt file
+
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,7 +22,7 @@ int main(int argc, char** argv) {
 
     if(argc != NUM_PARAM) {
         printf("error number of param\n");
-        printf("usage: ./name filename\n");
+        printf("usage: ./prog_name filename\n");
         exit(EXIT_FAILURE);
     
     }
